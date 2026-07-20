@@ -4,7 +4,7 @@
 #include <sys/signalfd.h>
 #include <sys/stat.h>
 
-#include "core/libcamera_encoder.hpp"
+#include "core/rpicam_encoder.hpp"
 #include "ndi_output.hpp"
 #include <libconfig.h++>
 
@@ -125,10 +125,10 @@ void mirrored_rotation(VideoOptions *options)
 	if (!ok)
 		throw std::runtime_error("illegal rotation value");
 	transform = rotation * transform;
-	options->transform = transform;
+	options->Set().transform = transform;
 }
 
-static void event_loop(LibcameraEncoder &app)
+static void event_loop(RPiCamEncoder &app)
 {
 	VideoOptions const *options = app.GetOptions();
 	std::unique_ptr<Output> output = std::unique_ptr<Output>(new NdiOutput(options, _getValue("neopixel_path", "/tmp/neopixel.state")));
@@ -136,15 +136,15 @@ static void event_loop(LibcameraEncoder &app)
 
 
 	app.OpenCamera();
-	app.ConfigureVideo(LibcameraEncoder::FLAG_VIDEO_JPEG_COLOURSPACE);
+	app.ConfigureVideo(RPiCamEncoder::FLAG_VIDEO_JPEG_COLOURSPACE);
 	app.StartEncoder();
 	app.StartCamera();
 	while (!exit_loop)
 	{
-		LibcameraEncoder::Msg msg = app.Wait();
-		if (msg.type == LibcameraEncoder::MsgType::Quit)
+		RPiCamEncoder::Msg msg = app.Wait();
+		if (msg.type == RPiCamEncoder::MsgType::Quit)
 			return;
-		else if (msg.type != LibcameraEncoder::MsgType::RequestComplete)
+		else if (msg.type != RPiCamEncoder::MsgType::RequestComplete)
 			throw std::runtime_error("unrecognised message!");
 
 		CompletedRequestPtr &completed_request = std::get<CompletedRequestPtr>(msg.payload);
@@ -156,28 +156,28 @@ int main(int argc, char *argv[])
 {
 	try
 	{
-		LibcameraEncoder app;
+		RPiCamEncoder app;
 		VideoOptions *options = app.GetOptions();
 		loadConfig();
-		options->codec = "YUV420";
-		options->verbose = false;
-		options->nopreview = true;
-		options->denoise = "off";
+		options->Set().codec = "YUV420";
+		options->Set().verbose = false;
+		options->Set().nopreview = true;
+		options->Set().denoise = "off";
 		// Set flip
-		options->width = _getValue("width", 1280);
-		options->height = _getValue("height", 720);
-		options->framerate = _getValue("framerate", 25);
-		options->awb = _getValue("awb", "auto");
-		options->awb_gain_b = _getValue("b_gain", 0.0f);
-		options->awb_gain_r = _getValue("r_gain", 0.0f);
-		options->saturation = _getValue("saturation", 1);
-		options->sharpness = _getValue("sharpness", 1);
-		options->contrast = _getValue("contrast", 1);
-		options->brightness = ((_getValue("brightness", 50) / 50) - 1);
-		options->exposure = _getValue("exposuremode", "auto");
-		options->metering = _getValue("meteringmode", "average");
+		options->Set().width = _getValue("width", 1280);
+		options->Set().height = _getValue("height", 720);
+		options->Set().framerate = _getValue("framerate", 25);
+		options->Set().awb = _getValue("awb", "auto");
+		options->Set().awb_gain_b = _getValue("b_gain", 0.0f);
+		options->Set().awb_gain_r = _getValue("r_gain", 0.0f);
+		options->Set().saturation = _getValue("saturation", 1);
+		options->Set().sharpness = _getValue("sharpness", 1);
+		options->Set().contrast = _getValue("contrast", 1);
+		options->Set().brightness = ((_getValue("brightness", 50) / 50) - 1);
+		options->Set().exposure = _getValue("exposuremode", "auto");
+		options->Set().metering = _getValue("meteringmode", "average");
 		mirrored_rotation(options);
-		options->Print();
+		// options->Print();
 		event_loop(app);
 	}
 	catch (std::exception const &e)
