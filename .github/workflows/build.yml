@@ -19,6 +19,14 @@ jobs:
             distro: bullseye
           - arch: armv7
             distro: bullseye
+          - arch: aarch64
+            distro: bookworm
+          - arch: armv7
+            distro: bookworm
+          - arch: aarch64
+            distro: trixie
+          - arch: armv7
+            distro: trixie
     steps:
       - uses: actions/checkout@v3
 
@@ -39,7 +47,7 @@ jobs:
             gpg --keyserver keyserver.ubuntu.com --recv-keys cf8a1af502a2aa2d763bae7e82b129927fa3303e
             gpg --armor --export cf8a1af502a2aa2d763bae7e82b129927fa3303e | apt-key add -
 
-            echo "deb http://archive.raspberrypi.org/debian/ bullseye main" > /etc/apt/sources.list.d/raspi.list
+            echo "deb http://archive.raspberrypi.org/debian/ ${{ matrix.distro }} main" > /etc/apt/sources.list.d/raspi.list
             apt-get update -q -y
             apt-get install -q -y --no-install-recommends cmake make gcc g++ libc6-dev libconfig++-dev libboost-program-options-dev libavahi-client3 cmake libcamera-dev libevent-pthreads-2.1-7 libevent-core-2.1-7 libevent-dev libcamera-dev libcamera0.7 libcamera-tools libcamera-apps-lite
 
