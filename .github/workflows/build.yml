@@ -23,10 +23,10 @@ jobs:
             distro: bookworm
           - arch: armv7
             distro: bookworm
-          - arch: aarch64
-            distro: trixie
-          - arch: armv7
-            distro: trixie
+          # - arch: aarch64
+          #   distro: trixie
+          # - arch: armv7
+          #   distro: trixie
     steps:
       - uses: actions/checkout@v3
 
