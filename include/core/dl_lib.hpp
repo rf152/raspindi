@@ -14,18 +14,19 @@
 #include <mutex>
 
 // Dynamic library helper.
-class DlLib {
- public:
-  DlLib(const std::string& lib, int flags = RTLD_LAZY);
-  DlLib(DlLib&& other);
-  DlLib(const DlLib& other) = delete;
-  DlLib& operator=(const DlLib& other) = delete;
-  ~DlLib();
+class DlLib
+{
+public:
+	DlLib(const std::string &lib, int flags = RTLD_LAZY);
+	DlLib(DlLib &&other);
+	DlLib(const DlLib &other) = delete;
+	DlLib &operator=(const DlLib &other) = delete;
+	~DlLib();
 
-  const void* GetSymbol(const std::string& symbol);
+	const void *GetSymbol(const std::string &symbol);
 
- private:
-  void* lib_ = nullptr;
-  std::map<std::string, const void*> symbol_map_;
-  std::mutex lock_;
+private:
+	void *lib_ = nullptr;
+	std::map<std::string, const void *> symbol_map_;
+	std::mutex lock_;
 };

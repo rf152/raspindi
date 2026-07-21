@@ -17,7 +17,8 @@
 #include "core/dl_lib.hpp"
 #include "core/logging.hpp"
 
-namespace libcamera {
+namespace libcamera
+{
 struct StreamConfiguration;
 }
 
@@ -25,47 +26,48 @@ class RPiCamApp;
 
 using namespace std::chrono_literals;
 class PostProcessingStage;
-using PostProcessorCallback = std::function<void(CompletedRequestPtr&)>;
+using PostProcessorCallback = std::function<void(CompletedRequestPtr &)>;
 using StreamConfiguration = libcamera::StreamConfiguration;
 typedef std::unique_ptr<PostProcessingStage> StagePtr;
 
-class PostProcessor {
- public:
-  PostProcessor(RPiCamApp* app);
+class PostProcessor
+{
+public:
+	PostProcessor(RPiCamApp *app);
 
-  ~PostProcessor();
+	~PostProcessor();
 
-  void LoadModules(const std::string& lib_dir);
+	void LoadModules(const std::string &lib_dir);
 
-  void Read(std::string const& filename);
+	void Read(std::string const &filename);
 
-  void SetCallback(PostProcessorCallback callback);
+	void SetCallback(PostProcessorCallback callback);
 
-  void AdjustConfig(std::string const& use_case, StreamConfiguration* config);
+	void AdjustConfig(std::string const &use_case, StreamConfiguration *config);
 
-  void Configure();
+	void Configure();
 
-  void Start();
+	void Start();
 
-  void Process(CompletedRequestPtr& request);
+	void Process(CompletedRequestPtr &request);
 
-  void Stop();
+	void Stop();
 
-  void Teardown();
+	void Teardown();
 
- private:
-  PostProcessingStage* createPostProcessingStage(char const* name);
+private:
+	PostProcessingStage *createPostProcessingStage(char const *name);
 
-  RPiCamApp* app_;
-  std::vector<StagePtr> stages_;
-  std::vector<DlLib> dynamic_stages_;
-  void outputThread();
+	RPiCamApp *app_;
+	std::vector<StagePtr> stages_;
+	std::vector<DlLib> dynamic_stages_;
+	void outputThread();
 
-  std::queue<CompletedRequestPtr> requests_;
-  std::queue<std::future<bool>> futures_;
-  std::thread output_thread_;
-  bool quit_;
-  PostProcessorCallback callback_;
-  std::mutex mutex_;
-  std::condition_variable cv_;
+	std::queue<CompletedRequestPtr> requests_;
+	std::queue<std::future<bool>> futures_;
+	std::thread output_thread_;
+	bool quit_;
+	PostProcessorCallback callback_;
+	std::mutex mutex_;
+	std::condition_variable cv_;
 };

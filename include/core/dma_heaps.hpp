@@ -7,16 +7,21 @@
 
 #pragma once
 
-#include <libcamera/base/unique_fd.h>
 #include <stddef.h>
 
-class DmaHeap {
- public:
-  DmaHeap();
-  ~DmaHeap();
-  bool isValid() const { return dmaHeapHandle_.isValid(); }
-  libcamera::UniqueFD alloc(const char* name, std::size_t size) const;
+#include <libcamera/base/unique_fd.h>
 
- private:
-  libcamera::UniqueFD dmaHeapHandle_;
+class DmaHeap
+{
+public:
+	DmaHeap();
+	~DmaHeap();
+	bool isValid() const
+	{
+		return dmaHeapHandle_.isValid();
+	}
+	libcamera::UniqueFD alloc(const char *name, std::size_t size) const;
+
+private:
+	libcamera::UniqueFD dmaHeapHandle_;
 };
