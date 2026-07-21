@@ -16,14 +16,6 @@ jobs:
       matrix:
         include:
           - arch: aarch64
-            distro: bullseye
-          - arch: armv7
-            distro: bullseye
-          - arch: aarch64
-            distro: bookworm
-          - arch: armv7
-            distro: bookworm
-          - arch: aarch64
             distro: trixie
           - arch: armv7
             distro: trixie
