@@ -23,14 +23,14 @@ jobs:
             distro: bookworm
           - arch: armv7
             distro: bookworm
-          # - arch: aarch64
-          #   distro: trixie
-          # - arch: armv7
-          #   distro: trixie
+          - arch: aarch64
+            distro: trixie
+          - arch: armv7
+            distro: trixie
     steps:
       - uses: actions/checkout@v3
 
-      - uses: uraimo/run-on-arch-action@v3
+      - uses: uraimo/run-on-arch-action@f5a337e929d1bf0f2f7993a4cd8bdef0e4a9a6ab
         name: Build
         id: runcmd64
         with:
@@ -53,12 +53,12 @@ jobs:
 
           run: |
             ln -s lib-${{ matrix.arch }} lib
-            mkdir build-${{ matrix.arch }} && cd build-${{ matrix.arch }}
+            mkdir build-${{ matrix.distro }}-${{ matrix.arch }} && cd build-${{ matrix.distro }}-${{ matrix.arch }}
             cmake ..
             make
             ls src/
-            mv src/raspindi raspindi-${{ matrix.arch }}
-            mv src/libndioutput.so libndioutput-${{ matrix.arch }}.so
+            mv src/raspindi raspindi-${{ matrix.distro }}-${{ matrix.arch }}
+            mv src/libndioutput.so libndioutput-${{ matrix.distro }}-${{ matrix.arch }}.so
 
       - name: Package NDI
         if: startsWith(github.ref, 'refs/tags/') && startsWith(github.repository, 'raspberry-pi-camera/')
@@ -73,20 +73,20 @@ jobs:
       - name: Artifacts - raspindi
         uses: actions/upload-artifact@v7
         with:
-          name: raspindi-${{ matrix.arch }}
-          path: build-${{ matrix.arch }}/raspindi-${{ matrix.arch }}
+          name: raspindi-${{ matrix.distro }}-${{ matrix.arch }}
+          path: build-${{ matrix.distro }}-${{ matrix.arch }}/raspindi-${{ matrix.arch }}
           
       - name: Artifacts - libndioutput
         uses: actions/upload-artifact@v7
         with:
-          name: libndioutput-${{ matrix.arch }}.so
-          path: build-${{ matrix.arch }}/libndioutput-${{ matrix.arch }}.so
+          name: libndioutput-${{ matrix.distro }}-${{ matrix.arch }}.so
+          path: build-${{ matrix.distro }}-${{ matrix.arch }}/libndioutput-${{ matrix.arch }}.so
           
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/') && startsWith(github.repository, 'raspberry-pi-camera/')
         with:
           files: |
-            build-${{ matrix.arch }}/raspindi-${{ matrix.arch }}
-            build-${{ matrix.arch }}/libndioutput-${{ matrix.arch }}.so
+            build-${{ matrix.distro }}-${{ matrix.arch }}/raspindi-${{ matrix.distro }}-${{ matrix.arch }}
+            build-${{ matrix.distro }}-${{ matrix.arch }}/libndioutput-${{ matrix.distro }}-${{ matrix.arch }}.so
             libndi-${{ matrix.arch }}.tar.gz
