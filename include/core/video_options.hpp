@@ -8,19 +8,16 @@
 #pragma once
 
 #include <cstdio>
-
 #include <string>
 
 #include "options.hpp"
 
-struct VideoOptions : public Options
-{
-	VideoOptions() : Options()
-	{
-		using namespace boost::program_options;
-		// Generally we shall use zero or empty values to avoid over-writing the
-		// codec's default behaviour.
-		// clang-format off
+struct VideoOptions : public Options {
+  VideoOptions() : Options() {
+    using namespace boost::program_options;
+    // Generally we shall use zero or empty values to avoid over-writing the
+    // codec's default behaviour.
+    // clang-format off
 		options_->add_options()
 			("bitrate,b", value<std::string>(&v_->bitrate_)->default_value("0bps"),
 			 "Set the video bitrate for encoding. If no units are provided, default to bits/second.")
@@ -98,20 +95,17 @@ struct VideoOptions : public Options
 			  "Whether to synchronise with another camera. Use \"off\", \"server\" or \"client\".")
 #endif
 		;
-		// clang-format on
-	}
+    // clang-format on
+  }
 
-	virtual bool Parse(int argc, char *argv[]) override
-	{
-		if (Options::Parse(argc, argv) == false)
-			return false;
+  virtual bool Parse(int argc, char* argv[]) override {
+    if (Options::Parse(argc, argv) == false) return false;
 
-		return v_->ParseVideo();
-	}
+    return v_->ParseVideo();
+  }
 
-	virtual void Print() const override
-	{
-		Options::Print();
-		v_->PrintVideo();
-	}
+  virtual void Print() const override {
+    Options::Print();
+    v_->PrintVideo();
+  }
 };

@@ -11,12 +11,10 @@
 
 #include "options.hpp"
 
-struct StillOptions : public Options
-{
-	StillOptions() : Options()
-	{
-		using namespace boost::program_options;
-		// clang-format off
+struct StillOptions : public Options {
+  StillOptions() : Options() {
+    using namespace boost::program_options;
+    // clang-format off
 		options_->add_options()
 			("quality,q", value<int>(&v_->quality)->default_value(93),
 			 "Set the JPEG quality parameter")
@@ -51,20 +49,17 @@ struct StillOptions : public Options
 			("zsl", value<bool>(&v_->zsl)->default_value(false)->implicit_value(true),
 			 "Use the capture mode for preview in order to reduce the shutter lag for the final capture")
 			;
-		// clang-format on
-	}
+    // clang-format on
+  }
 
-	virtual bool Parse(int argc, char *argv[]) override
-	{
-		if (Options::Parse(argc, argv) == false)
-			return false;
+  virtual bool Parse(int argc, char* argv[]) override {
+    if (Options::Parse(argc, argv) == false) return false;
 
-		return v_->ParseStill();
-	}
+    return v_->ParseStill();
+  }
 
-	virtual void Print() const override
-	{
-		Options::Print();
-		v_->PrintStill();
-	}
+  virtual void Print() const override {
+    Options::Print();
+    v_->PrintStill();
+  }
 };
