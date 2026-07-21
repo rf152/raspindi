@@ -102,6 +102,11 @@ works well.
 
 # Changelog
 
+## v4.0.0
+Updated to use new rpicam-app library
+Added trixie and bookworm to build matrix
+Removed buster from build matrix
+
 ## v3.0.4
 Updated libcamera code to fit with libcamera changes.
 
