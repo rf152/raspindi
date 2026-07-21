@@ -26,14 +26,14 @@
 // THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //***********************************************************************************************************
-// 
+//
 // NOTE: It is very important to note the distinction between the automatic advertising done by the NDI
 // sender versus the advertising done with this NDI sender advertiser. The NDI sender will always advertise
 // via mDNS or the NDI Discovery Server, depending on how it has been configured. The advertising done within
 // this NDI sender advertiser API is strictly through the NDI Discovery Server for monitoring purposes. The
 // NDI finder or NDI receiver will not use the advertising from the NDI sender advertiser to locate NDI
 // sources in order to know their network endpoints or other information.
-// 
+//
 //***********************************************************************************************************
 
 // The type instance for a sender advertiser.

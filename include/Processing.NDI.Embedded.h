@@ -1,9 +1,9 @@
 #pragma once
 
 //*************************************************************************************************************************************
-// 
+//
 // Copyright(c) 2014-2021, NewTek, inc.
-// 
+//
 // This file is part of the Embedded SDK and may not be distributed.
 
 #include "Processing.NDI.Lib.h"
@@ -34,7 +34,7 @@ typedef enum NDIlib_FourCC_video_type_ex_e
 	NDIlib_FourCC_video_type_ex_SHQ7_lowest_bandwidth = NDI_LIB_FOURCC('s', 'h', 'q', '7'),			// SpeedHQ 4:2:2:4
 	NDIlib_FourCC_type_SHQ7_lowest_bandwidth = NDIlib_FourCC_video_type_ex_SHQ7_lowest_bandwidth,	// Backwards compatibility
 
-	// If SpeedHQ 4:4:4 / 4:4:4:4 formats are desired, please contact ndi@newtek.com. 
+	// If SpeedHQ 4:4:4 / 4:4:4:4 formats are desired, please contact ndi@newtek.com.
 
 	// H.264 video at the highest bandwidth -- the data field is expected to be prefixed with the
 	// NDIlib_compressed_packet_t structure
@@ -259,7 +259,7 @@ void NDIlib_routing_add_connection_metadata(NDIlib_routing_instance_t p_instance
 
 // Connection based metadata is data that is sent automatically each time a new connection is received. You
 // queue all of these up and they are sent on each connection. To reset them you need to clear them all and
-// set them up again. 
+// set them up again.
 PROCESSINGNDILIB_EMBEDDED_API
 void NDIlib_routing_clear_connection_metadata(NDIlib_routing_instance_t p_instance);
 
@@ -279,6 +279,6 @@ NDIlib_recv_instance_t NDIlib_recv_create_v4(const NDIlib_recv_create_v3_t* p_cr
 PROCESSINGNDILIB_EMBEDDED_API
 NDIlib_send_instance_t NDIlib_send_create_v2(const NDIlib_send_create_t* p_create_settings NDILIB_CPP_DEFAULT_VALUE(NULL), const char* p_config_data NDILIB_CPP_DEFAULT_VALUE(NULL));
 
-// Create an NDI routing source. 
+// Create an NDI routing source.
 PROCESSINGNDILIB_EMBEDDED_API
 NDIlib_routing_instance_t NDIlib_routing_create_v2(const NDIlib_routing_create_t* p_create_settings, const char* p_config_data NDILIB_CPP_DEFAULT_VALUE(NULL));

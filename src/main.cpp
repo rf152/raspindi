@@ -119,7 +119,7 @@ void mirrored_rotation(VideoOptions *options)
 		transform = libcamera::Transform::HFlip * transform;
 	if (vflip)
 		transform = libcamera::Transform::VFlip * transform;
-	
+
 	bool ok;
 	libcamera::Transform rotation = libcamera::transformFromRotation(_getValue("rotation", 0), &ok);
 	if (!ok)

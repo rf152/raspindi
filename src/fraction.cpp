@@ -16,7 +16,7 @@ fraction_t findFraction(float f)
 {
     char chr[10];
     sprintf(chr, "%.2f", f);
-    
+
     string s(chr);
 	// Initialize variables
 	string be_deci = "",
