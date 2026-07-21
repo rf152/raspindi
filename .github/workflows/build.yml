@@ -43,6 +43,7 @@ jobs:
 
           install: |
             apt-get update -q -y
+            apt-get install curl -y
             curl -o /tmp/raspberrypi-archive-keyring_2016.10.31_all.deb 'https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-archive-keyring/raspberrypi-archive-keyring_2016.10.31_all.deb'
             dpkg -i /tmp/raspberrypi-archive-keyring_2016.10.31_all.deb
             echo "deb [signed-by=/usr/share/keyrings/raspberrypi-archive-keyring.gpg] http://archive.raspberrypi.org/debian/ ${{ matrix.distro }} main" > /etc/apt/sources.list.d/raspi.list
