@@ -15,14 +15,18 @@ jobs:
     strategy:
       matrix:
         include:
-          # - arch: aarch64
-          #   distro: bullseye
-          # - arch: armv7
-          #   distro: bullseye
-          # - arch: aarch64
-          #   distro: bookworm
-          # - arch: armv7
-          #   distro: bookworm
+          - arch: aarch64
+            distro: bullseye
+            libcamera_version: 0
+          - arch: armv7
+            distro: bullseye
+            libcamera_version: 0
+          - arch: aarch64
+            distro: bookworm
+            libcamera_version: 0.5
+          - arch: armv7
+            distro: bookworm
+            libcamera_version: 0.5 
           - arch: aarch64
             distro: trixie
             libcamera_version: 0.7 
